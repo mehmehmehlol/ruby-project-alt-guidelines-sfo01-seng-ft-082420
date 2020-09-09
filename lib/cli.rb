@@ -1,5 +1,4 @@
 class CommandLineInterface
-    attr_reader :student
 
     def run
         prompt = TTY::Prompt.new
@@ -59,15 +58,16 @@ class CommandLineInterface
     def find_or_create_student
         name
         input = gets.chomp
-        @student = Student.find_or_create_by(name: input)
-        puts "#{@student}"
+        student = Student.find_or_create_by(name: input)
+        binding.pry
+        puts student.name
     end
     
     def find_or_create_coach
         name
         input = gets.chomp
-        @coach = Coach.find_or_create_by(name: input)
-        puts "#{@coach}"
+        coach = Coach.find_or_create_by(name: input)
+        puts coach.name
     end
 
     def count_swim_meet
