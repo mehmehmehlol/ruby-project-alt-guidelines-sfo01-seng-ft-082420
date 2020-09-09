@@ -70,82 +70,92 @@ class CommandLineInterface
     # Create student if not exist
     def find_or_create_student
         name
-        input = gets.chomp
+        input = gets.chomp.capitalize()
         student = Student.find_or_create_by(name: input)
-        puts "#{student}"
+        puts "#{student.name}"
+        run
     end
     
     # Create coach if not exist
     def find_or_create_coach
         name
-        input = gets.chomp
+        input = gets.chomp.capitalize()
         coach = Coach.find_or_create_by(name: input)
-        puts "#{coach}"
+        binding.pry
+        puts "#{coach.name}"
+        run
     end
 
     # Return the numbers of swim meet
     def count_swim_meet
         puts "#{SwimMeet.count}"
+        run
     end
 
     # Return the first coach found in the Coach Array
     def first_coach
         puts "#{Coach.first}"
+        run
     end
 
     # Return the numbers of coaches
     def count_coach
         puts "#{Coach.count}"
+        run
     end
     # Return the last student found in the Student Array
     def last_student
         puts "#{Student.last}"
+        run
     end
 
     # Return the numbers of students from that particular coach
     def count_student
-        input = gets.chomp
+        input = gets.chomp.capitalize()
         coach = Coach.find_by(name: input)
         puts "#{coach.students.name}"
+        run
     end
 
     # Update coach's name
     def update_coach
         name
-        input = gets.chomp
+        input = gets.chomp.capitalize()
         coach = Coach.find_by(name: input)
         if coach
             puts "Please enter the name you want to replace with"
-            repl_name = gets.chomp
+            repl_name = gets.chomp.capitalize()
             coach.update(name: repl_name)
             puts "#{coach}"
         else
-            puts "Name not found. Would you like to create a profile?"
+            puts "Name not found. Please create a profile."
+            find_or_create_student
         end
-     end
+    end
 
     # Update student's name
     def update_student
         name
-        input = gets.chomp
+        input = gets.chomp.capitalize()
         student = Student.find_by(name: input)
         if coach
             puts "Please enter the name you want to replace with"
-            repl_name = gets.chomp
+            repl_name = gets.chomp.capitalize
             coach.update(name: repl_name)
             puts "#{student}"
         else
-            puts "Name not found. Would you like to create a profile?"
+            puts "Name not found. Please create a profile."
+            find_or_create_student
         end
-     end
+    end
 
     def delete_coach
         name
-        input = gets.chomp
+        input = gets.chomp.capitalize()
         coach = Coach.find_by(name: input)
         if coach
             puts "Would you like to delete this #{input}?"
-            choice = gets.chomp
+            choice = gets.chomp.capitalize
             
             if choice == "yes"
                 coach.delete
@@ -155,7 +165,7 @@ class CommandLineInterface
 
     def delete_student
         name
-        input = gets.chomp
+        input = gets.chomp.capitalize()
         student = Student.find_by(name: input)
         if student
             puts "Would you like to delete this #{input}?"
@@ -175,6 +185,7 @@ class CommandLineInterface
             Coach.students.delete_all
         end
     end
+    
 
 
 
