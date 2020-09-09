@@ -23,8 +23,8 @@ sm1 = SwimMeet.create(coach_id: Coach.all.sample.id, student_id: Student.all.sam
 sm2 = SwimMeet.create(coach_id: Coach.all.sample.id, student_id: Student.all.sample.id, name: Faker::Address.city)
 sm3 = SwimMeet.create(coach_id: Coach.all.sample.id, student_id: Student.all.sample.id, name: Faker::Address.city)
 
-sm1.student << student1
-sm1.coach << coach1
+# sm1.student << student1
+# sm1.coach << coach1
 
 
 
