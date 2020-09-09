@@ -1,53 +1,64 @@
 class CommandLineInterface
-    attr_reader :student
-
     def run
         prompt = TTY::Prompt.new
         system("clear")
         welcome = prompt.select("Welcome to the Swim Meet") do |menu|
-            menu.choice "find_or_create_student"
-            menu.choice "find_or_create_coach"
-            menu.choice "count_swim_meet"
+            menu.choice "Create Or Find Student(s)"
+            menu.choice "Create Or Find Coach(es)"
+            # Here we can change to its own menu: create swim meets, find swim meets and number of swim meets 
+            menu.choice "Numbers of Swim Meets"
+            # Here we can change to its own menu: return the number of coaches and find their students (or something) 
             menu.choice "first_coach"
+            menu.choice "Numbers of Coaches"
+            # Here we can change to its own menu: return the number of coaches of a particular students and find their coaches
             menu.choice "last_student"
+            menu.choice "count_student"
             menu.choice "update_coach"
             menu.choice "update_student"
             menu.choice "delete_coach"
             menu.choice "delete_student"
+            menu.choice "FOR COACHES ONLY: Delete all students"
             menu.choice "exit" 
         end 
 
         case welcome
         
-            when "find_or_create_student"
+            when "Create Or Find Student(s)"
                 find_or_create_student 
 
-            when "find_or_create_coach" 
+            when "Create Or Find Coach(es)" 
                 find_or_create_coach
 
-            when "count_swim_meet"
+            when "Numbers of Swim Meets"
                 count_swim_meet
 
             when "first_coach" 
                 first_coach
+            
+            when "Numbers of Coaches"
+                count_coach
 
             when "last_student"
                 last_student
+            when "student_count"
+                count_student
 
             when "update_coach" 
                  update_coach
 
-            # when "update_student"
-            #     delete
+            when "update_student"
+                update_student
 
-            # when "delete_coach" 
-            #     update
+            when "delete_coach" 
+                delete_coach
 
-            # when "delete_student"
-            #     delete
+            when "delete_student"
+                delete_student
 
-            # else  
-            #   puts "GoodBye"
+            when "FOR COACHES ONLY: Delete all students"
+                delete_all_students
+            else  
+              puts "GoodBye"
               
         end
     end
@@ -60,16 +71,16 @@ class CommandLineInterface
     def find_or_create_student
         name
         input = gets.chomp
-        @student = Student.find_or_create_by(name: input)
-        puts "#{@student}"
+        student = Student.find_or_create_by(name: input)
+        puts "#{student}"
     end
     
     # Create coach if not exist
     def find_or_create_coach
         name
         input = gets.chomp
-        @coach = Coach.find_or_create_by(name: input)
-        puts "#{@coach}"
+        coach = Coach.find_or_create_by(name: input)
+        puts "#{coach}"
     end
 
     # Return the numbers of swim meet
@@ -82,25 +93,90 @@ class CommandLineInterface
         puts "#{Coach.first}"
     end
 
+    # Return the numbers of coaches
+    def count_coach
+        puts "#{Coach.count}"
+    end
     # Return the last student found in the Student Array
     def last_student
         puts "#{Student.last}"
     end
 
-    # Update coaches name
+    # Return the numbers of students from that particular coach
+    def count_student
+        input = gets.chomp
+        coach = Coach.find_by(name: input)
+        puts "#{coach.students.name}"
+    end
+
+    # Update coach's name
     def update_coach
         name
         input = gets.chomp
         coach = Coach.find_by(name: input)
         if coach
-        puts "Please enter the name you want to replace with"
-        repl_name = gets.chomp
-        coach.update(name: repl_name)
-        puts "#{coach}"
+            puts "Please enter the name you want to replace with"
+            repl_name = gets.chomp
+            coach.update(name: repl_name)
+            puts "#{coach}"
         else
-            puts "Name not found"
+            puts "Name not found. Would you like to create a profile?"
         end
      end
+
+    # Update student's name
+    def update_student
+        name
+        input = gets.chomp
+        student = Student.find_by(name: input)
+        if coach
+            puts "Please enter the name you want to replace with"
+            repl_name = gets.chomp
+            coach.update(name: repl_name)
+            puts "#{student}"
+        else
+            puts "Name not found. Would you like to create a profile?"
+        end
+     end
+
+    def delete_coach
+        name
+        input = gets.chomp
+        coach = Coach.find_by(name: input)
+        if coach
+            puts "Would you like to delete this #{input}?"
+            choice = gets.chomp
+            
+            if choice == "yes"
+                coach.delete
+            end
+        end
+    end
+
+    def delete_student
+        name
+        input = gets.chomp
+        student = Student.find_by(name: input)
+        if student
+            puts "Would you like to delete this #{input}?"
+            choice = gets.chomp
+            
+            if choice == "yes"
+                student.delete
+            end
+        end
+    end
+
+    def delete_all_students
+        puts "Would you like to delete all students?"
+        choice = gets.chomp
+            
+        if choice == "yes"
+            Coach.students.delete_all
+        end
+    end
+
+
 
     # Return the first coach/student/swim meet in the table??
         # Student.first
