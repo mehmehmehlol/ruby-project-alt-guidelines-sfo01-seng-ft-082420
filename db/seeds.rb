@@ -2,7 +2,7 @@ SwimMeet.destroy_all
 Student.destroy_all
 Coach.destroy_all
 
-sm1 = SwimMeet.create(name: Faker::Company.name)
+sm1 = SwimMeet.create(name: Faker::Address.city)
 
 student1 = Student.create(name: Faker::Name.name)
 student2 = Student.create(name: Faker::Name.name)
