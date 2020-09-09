@@ -33,3 +33,6 @@ CLI will be immediately activated once you are in our program. Please follow the
 
 Our goal of this program is to make this simple and user-friendly as we can, and be able to give you information that you are looking for. 
 
+Contributors: 
+Arpita and Megan
+Sep 2020
