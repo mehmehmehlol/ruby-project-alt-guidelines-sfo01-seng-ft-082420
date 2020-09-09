@@ -2,7 +2,7 @@ class CommandLineInterface
     def run
         prompt = TTY::Prompt.new
         system("clear")
-        welcome = prompt.select("Welcome to the Swim Meet") do |menu|
+        welcome = prompt.select("Welcome to the Swim Meet", cycle: true) do |menu|
             menu.choice "Create Or Find Student(s)"
             menu.choice "Create Or Find Coach(es)"
             # Here we can change to its own menu: create swim meets, find swim meets and number of swim meets 
@@ -28,6 +28,8 @@ class CommandLineInterface
 
             when "Create Or Find Coach(es)" 
                 find_or_create_coach
+            when "For Coaches Only: Create Swim Meet"
+                find_or_create_swim_meet
 
             when "Numbers of Swim Meets"
                 count_swim_meet
@@ -58,7 +60,7 @@ class CommandLineInterface
             when "FOR COACHES ONLY: Delete all students"
                 delete_all_students
             else  
-              puts "GoodBye"
+              puts "BYE!! "
               
         end
     end
@@ -67,13 +69,23 @@ class CommandLineInterface
         puts "Please enter your name"  
     end
 
+    def continuation
+        choice = prompt.select("Would you like to continue", %w(Yes No), cycle: true) 
+        
+        if choice == "Yes"
+            run
+        else 
+            put "Thanks for stopping by!"
+        end
+    end
+
     # Create student if not exist
     def find_or_create_student
         name
         input = gets.chomp.capitalize()
         student = Student.find_or_create_by(name: input)
         puts "#{student.name}"
-        run
+        continuation
     end
     
     # Create coach if not exist
@@ -81,32 +93,40 @@ class CommandLineInterface
         name
         input = gets.chomp.capitalize()
         coach = Coach.find_or_create_by(name: input)
-        binding.pry
         puts "#{coach.name}"
-        run
+        continuation
+    end
+
+    # Create Swim Meet if not exist
+    def find_or_create_swim_meet
+        name
+        input = gets.chomp.capitalize()
+        coach = SwimMeet.find_or_create_by(name: input)
+        puts "#{coach.name}"
+        continuation
     end
 
     # Return the numbers of swim meet
     def count_swim_meet
         puts "#{SwimMeet.count}"
-        run
+        continuation
     end
 
     # Return the first coach found in the Coach Array
     def first_coach
         puts "#{Coach.first}"
-        run
+        continuation
     end
 
     # Return the numbers of coaches
     def count_coach
         puts "#{Coach.count}"
-        run
+        continuation
     end
     # Return the last student found in the Student Array
     def last_student
         puts "#{Student.last}"
-        run
+        continuation
     end
 
     # Return the numbers of students from that particular coach
@@ -114,7 +134,7 @@ class CommandLineInterface
         input = gets.chomp.capitalize()
         coach = Coach.find_by(name: input)
         puts "#{coach.students.name}"
-        run
+        continuation
     end
 
     # Update coach's name
@@ -127,9 +147,10 @@ class CommandLineInterface
             repl_name = gets.chomp.capitalize()
             coach.update(name: repl_name)
             puts "#{coach}"
+            continuation
         else
             puts "Name not found. Please create a profile."
-            find_or_create_student
+            find_or_create_coach
         end
     end
 
@@ -143,12 +164,14 @@ class CommandLineInterface
             repl_name = gets.chomp.capitalize
             coach.update(name: repl_name)
             puts "#{student}"
+            continuation
         else
             puts "Name not found. Please create a profile."
             find_or_create_student
         end
     end
 
+    # Delete coach
     def delete_coach
         name
         input = gets.chomp.capitalize()
@@ -161,8 +184,11 @@ class CommandLineInterface
                 coach.delete
             end
         end
+        continuation
     end
 
+
+    # Delete Student
     def delete_student
         name
         input = gets.chomp.capitalize()
@@ -175,8 +201,10 @@ class CommandLineInterface
                 student.delete
             end
         end
+        continuation
     end
 
+    # Delete all students
     def delete_all_students
         puts "Would you like to delete all students?"
         choice = gets.chomp
@@ -184,6 +212,7 @@ class CommandLineInterface
         if choice == "yes"
             Coach.students.delete_all
         end
+        continuation
     end
     
 
