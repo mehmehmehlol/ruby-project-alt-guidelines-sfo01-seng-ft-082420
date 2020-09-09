@@ -35,7 +35,7 @@ class CommandLineInterface
                 last_student
 
             when "update_coach" 
-                update_coach
+                 update_coach
 
             # when "update_student"
             #     delete
@@ -82,12 +82,19 @@ class CommandLineInterface
         puts "#{Student.last}"
     end
 
-    def update_coach
+     def update_coach
         name
+        input = gets.chomp
         coach = Coach.find_by(name: input)
-        user.update(name: )
-        puts
-    end
+        if coach
+        puts "Please enter the name you want to replace with"
+        repl_name = gets.chomp
+        coach.update(name: repl_name)
+        puts "#{coach}"
+        else
+            puts "Name not found"
+        end
+     end
 
 end
  
