@@ -1,67 +1,139 @@
 class CommandLineInterface
     def run
+       welcome 
+    end
+
+    def welcome
         prompt = TTY::Prompt.new
         system("clear")
         welcome = prompt.select("Welcome to the Swim Meet", cycle: true) do |menu|
-            menu.choice "Create Or Find Student(s)"
-            menu.choice "Create Or Find Coach(es)"
-            # Here we can change to its own menu: create swim meets, find swim meets and number of swim meets 
-            menu.choice "Numbers of Swim Meets"
-            # Here we can change to its own menu: return the number of coaches and find their students (or something) 
-            menu.choice "first_coach"
-            menu.choice "Numbers of Coaches"
-            # Here we can change to its own menu: return the number of coaches of a particular students and find their coaches
-            menu.choice "last_student"
-            menu.choice "count_student"
-            menu.choice "update_coach"
-            menu.choice "update_student"
-            menu.choice "delete_coach"
-            menu.choice "delete_student"
-            menu.choice "FOR COACHES ONLY: Delete all students"
+            menu.choice "Student"
+            menu.choice "Coach"
+            menu.choice "Swim Meet"
             menu.choice "exit" 
         end 
 
         case welcome
         
-            when "Create Or Find Student(s)"
-                find_or_create_student 
+        when "Student"
+            student
 
-            when "Create Or Find Coach(es)" 
-                find_or_create_coach
-            when "For Coaches Only: Create Swim Meet"
-                find_or_create_swim_meet
+        when "Coach" 
+            coach
+        when "Swim Meet"
+            swim_meet
+        else 
+            "SEA you later!!"
+        end
+    end
 
-            when "Numbers of Swim Meets"
-                count_swim_meet
+    def student
+        prompt = TTY::Prompt.new
+        system("clear")
+        student = prompt.select("WELCOME, STUDENTS!", cycle: true) do |menu|
+            menu.choice "Create Or Find Student(s)"
+            menu.choice "update_student"
+            menu.choice "delete_student"
+            menu.choice "Go back to the Welcome Page"
+            menu.choice "Exit"
+        end
 
-            when "first_coach" 
-                first_coach
-            
-            when "Numbers of Coaches"
-                count_coach
+        case student
+        when "Create Or Find Student(s)"
+            find_or_create_student
 
-            when "last_student"
-                last_student
-            when "student_count"
-                count_student
+        when "update_student"
+            update_student
 
-            when "update_coach" 
-                 update_coach
+        when "delete_student" 
+            delete_student
+        when "Go back to the Welcome Page"
+            welcome
+        else
+            puts "BYE!! "
+        end
+        # end
+    end
 
-            when "update_student"
-                update_student
+    def coach
+        prompt = TTY::Prompt.new
+        system("clear")
 
-            when "delete_coach" 
-                delete_coach
+        coach = prompt.select("WELCOME, COACHES!", cycle: true) do |menu|
+            menu.choice "Create Or Find Coach(es)"
+            menu.choice "Create Swim Meet"
+            menu.choice "Show Students"
+            menu.choice "last_student"
+            menu.choice "Number of Students"
+            menu.choice "update_coach"
+            menu.choice "delete_coach"
+            menu.choice "FOR COACHES ONLY: Delete all students"
+            menu.choice "Go back to the Welcome Page"
+            menu.choice "Exit!"
+        end
 
-            when "delete_student"
-                delete_student
+        case coach
 
-            when "FOR COACHES ONLY: Delete all students"
-                delete_all_students
-            else  
-              puts "BYE!! "
-              
+        when "Create Or Find Coach(es)"
+            find_or_create_coach
+    
+        when "Create Swim Meet"
+            # create a new method: create_swim_meet
+        when "Show Students"
+            show_student
+        when "last_student"
+            last_student
+        when "Number of Students"
+            count_student
+
+        when "update_coach" 
+            update_coach
+
+        when "delete_coach" 
+            delete_coach
+
+        when "FOR COACHES ONLY: Delete all students"
+            delete_all_students
+        when "Go back to the Welcome Page"
+            welcome
+        else  
+            puts "BYE!! "
+        end
+        # end
+    end
+
+    def swim_meet
+        prompt = TTY::Prompt.new
+        system("clear")
+        swim_meet = prompt.select("Swim Meet Menu", cycle: true) do |menu|
+            menu.choice "first_coach"
+            menu.choice "Numbers of Swim Meets"
+            menu.choice "Numbers of Coaches"
+            menu.choice "Go back to the Coach Page"
+            menu.choice "Go back to the Welcome Page"
+            menu.choice "Exit!"
+        end
+
+        case swim_meet
+        
+        when "Numbers of Swim Meets"
+            count_swim_meet
+
+        when "first_coach" 
+            first_coach
+        
+        when "Numbers of Coaches"
+            count_coach
+
+        when "Go back to the Coach Page"
+            coach
+
+        when "Go back to the Welcome Page"
+            welcome
+
+        else  
+            puts "BYE!! "
+        
         end
     end
   
@@ -69,43 +141,50 @@ class CommandLineInterface
         puts "Please enter your name"  
     end
 
-    def continuation
-        prompt = TTY::Prompt.new
-        system("clear")
-        choice = prompt.select("Would you like to continue", %w(Yes No), cycle: true) 
+    # def continuation
+    #     prompt = TTY::Prompt.new
+    #     system("clear")
+    #     choice = prompt.select("Would you like to continue", %w(Yes No), cycle: true) 
         
-        if choice == "Yes"
-            run
-        else 
-            puts "Thanks for stopping by! SEA you later!!"
-        end
-    end
+    #     if choice == "Yes"
+    #         run
+    #     else 
+    #         puts "Thanks for stopping by! SEA you later!!"
+    #     end
+    # end
 
     # Create student if not exist
     # Get students and print out the associated coach and swim meet
     def find_or_create_student
         name
         input = gets.chomp.capitalize()
-        student = Student.find_or_create_by(name: input)
-        puts "#{student.name}"
-        
+        student_name = Student.find_or_create_by(name: input)
+        puts "#{student_name.name}"
+        # instead of returning their name, return the swim meet and coach associate with
+        puts "Return the menu? Press any key to return the menu"
+        gets.chomp
+        student
         # continuation
     end
 
     # Print out all the students with the associated swim meet
-    def show_student(students)
-        students.each do |students|
-            students.swim_meets.map {}
-        end
+    def show_student
+        # input
+        sm1 = SwimMeet.find_by(name: "North Ikebury")
+        sm1.student
+
     end
     
     # Create coach if not exist
     def find_or_create_coach
         name
         input = gets.chomp.capitalize()
-        coach = Coach.find_or_create_by(name: input)
-        puts "#{coach.name}"
-        
+        coach_name = Coach.find_or_create_by(name: input)
+        puts "#{coach_name.name}"
+         # instead of returning their name, return the swim meet and student associate with
+        puts "Return the menu? Press any key to return the menu"
+        gets.chomp
+        coach
         # continuation
     end
 
@@ -113,52 +192,77 @@ class CommandLineInterface
     def find_or_create_swim_meet
         name
         input = gets.chomp.capitalize()
-        swim_meet = SwimMeet.find_or_create_by(name: input)
-        puts "#{swim_meet.name}"
+        swim_meet_name = SwimMeet.find_or_create_by(name: input)
+        puts "#{swim_meet_name.name}"
+        puts "Return the menu? Press any key to return the menu"
+        gets.chomp
+        swim_meet
         # continuation
     end
 
     # Return the numbers of swim meet
     def count_swim_meet
         puts "#{SwimMeet.count}"
+        puts "Return the menu? Press any key to return the menu"
+        gets.chomp
+        swim_meet
         # continuation
     end
 
     # Return the first coach found in the Coach Array
     def first_coach
-        puts "#{Coach.first}"
+        puts "#{Coach.first.name}"
+        puts "Return the menu? Press any key to return the menu"
+        gets.chomp
+        swim_meet
+        # continuation
+    end
+
+     # Return the last student found in the Student Array
+    def last_student
+        puts "#{Student.last.name}"
+        puts "Return the menu? Press any key to return the menu"
+        gets.chomp
+        coach
         # continuation
     end
 
     # Return the numbers of coaches
     def count_coach
         puts "#{Coach.count}"
+        puts "Return the menu? Press any key to return the menu"
+        gets.chomp
+        swim_meet
         # continuation
     end
-    # Return the last student found in the Student Array
-    def last_student
-        puts "#{Student.last}"
-        # continuation
-    end
+   
 
     # Return the numbers of students from that particular coach
     def count_student
         input = gets.chomp.capitalize()
-        coach = Coach.find_by(name: input)
-        puts "#{coach.students.name}"
+        coach_name = Coach.find_by(name: input)
+        binding.pry
+        puts "#{coach_name.student.name}"
+        puts "Return the menu? Press any key to return the menu"
+        gets.chomp
+        coach
         # continuation
     end
+    # may need another method for the overrall swimmeet
 
     # Update coach's name
     def update_coach
         name
         input = gets.chomp.capitalize()
-        coach = Coach.find_by(name: input)
-        if coach
+        coach_name = Coach.find_by(name: input)
+        if coach_name
             puts "Please enter the name you want to replace with"
             repl_name = gets.chomp.capitalize()
-            coach.update(name: repl_name)
-            puts "#{coach}"
+            coach_name.update(name: repl_name)
+            puts "#{coach_name.name}"
+            puts "Return the menu? Press any key to return the menu"
+            gets.chomp
+            coach
             # continuation
         else
             puts "Name not found. Please create a profile."
@@ -170,12 +274,16 @@ class CommandLineInterface
     def update_student
         name
         input = gets.chomp.capitalize()
-        student = Student.find_by(name: input)
-        if coach
+        student_name = Student.find_by(name: input)
+        if student_name
             puts "Please enter the name you want to replace with"
             repl_name = gets.chomp.capitalize
-            coach.update(name: repl_name)
-            puts "#{student}"
+            student_name.update(name: repl_name)
+            # may need to delete the following
+            puts "#{student_name.name}"
+            puts "Return the menu? Press any key to return the menu"
+            gets.chomp
+            student
             # continuation
         else
             puts "Name not found. Please create a profile."
@@ -187,15 +295,18 @@ class CommandLineInterface
     def delete_coach
         name
         input = gets.chomp.capitalize()
-        coach = Coach.find_by(name: input)
-        if coach
+        coach_name = Coach.find_by(name: input)
+        if coach_name
             puts "Would you like to delete this #{input}?"
             choice = gets.chomp.capitalize
             
             if choice == "yes"
-                coach.delete
+                coach_name.destroy
             end
         end
+        puts "Return the menu? Press any key to return the menu"
+        gets.chomp
+        coach
         # continuation
     end
 
@@ -204,16 +315,19 @@ class CommandLineInterface
     def delete_student
         name
         input = gets.chomp.capitalize()
-        student = Student.find_by(name: input)
-        if student
+        student_name = Student.find_by(name: input)
+        if student_name
             puts "Would you like to delete this #{input}?"
             choice = gets.chomp
             
             if choice == "yes"
-                student.delete
+                student_name.destroy
+                # return a confirmation statement
             end
         end
-        continuation
+        puts "Return the menu? Press any key to return the menu"
+        gets.chomp
+        student
     end
 
     # Delete all students
@@ -224,13 +338,15 @@ class CommandLineInterface
         if choice == "yes"
             Coach.students.delete_all
         end
+        puts "Return the menu? Press any key to return the menu"
+        gets.chomp
+        coach
         # continuation
     end
-    
+  
+end
 
-
-
-    # Return the first coach/student/swim meet in the table??
+# Return the first coach/student/swim meet in the table??
         # Student.first
     # Return the last coach/student/swim meet in the table?
         # Student.last
@@ -276,7 +392,7 @@ class CommandLineInterface
     # I guess we can do coaches can delete all the students and/or swim meet. 
     # If it's not too complicated, we can send a warning message or something :)
         # Student.delete_all
-        # SwimMeet.delete_all
-end
+        # SwimMeet.delete_al
+# end
  
     
