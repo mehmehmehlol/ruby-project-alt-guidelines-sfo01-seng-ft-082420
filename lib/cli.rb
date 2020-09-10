@@ -106,7 +106,7 @@ class CommandLineInterface
         coach = Coach.find_or_create_by(name: input)
         puts "#{coach.name}"
         
-        continuation
+        # continuation
     end
 
     # Create Swim Meet if not exist
@@ -115,30 +115,30 @@ class CommandLineInterface
         input = gets.chomp.capitalize()
         swim_meet = SwimMeet.find_or_create_by(name: input)
         puts "#{swim_meet.name}"
-        continuation
+        # continuation
     end
 
     # Return the numbers of swim meet
     def count_swim_meet
         puts "#{SwimMeet.count}"
-        continuation
+        # continuation
     end
 
     # Return the first coach found in the Coach Array
     def first_coach
         puts "#{Coach.first}"
-        continuation
+        # continuation
     end
 
     # Return the numbers of coaches
     def count_coach
         puts "#{Coach.count}"
-        continuation
+        # continuation
     end
     # Return the last student found in the Student Array
     def last_student
         puts "#{Student.last}"
-        continuation
+        # continuation
     end
 
     # Return the numbers of students from that particular coach
@@ -146,7 +146,7 @@ class CommandLineInterface
         input = gets.chomp.capitalize()
         coach = Coach.find_by(name: input)
         puts "#{coach.students.name}"
-        continuation
+        # continuation
     end
 
     # Update coach's name
@@ -159,7 +159,7 @@ class CommandLineInterface
             repl_name = gets.chomp.capitalize()
             coach.update(name: repl_name)
             puts "#{coach}"
-            continuation
+            # continuation
         else
             puts "Name not found. Please create a profile."
             find_or_create_coach
@@ -176,7 +176,7 @@ class CommandLineInterface
             repl_name = gets.chomp.capitalize
             coach.update(name: repl_name)
             puts "#{student}"
-            continuation
+            # continuation
         else
             puts "Name not found. Please create a profile."
             find_or_create_student
@@ -196,7 +196,7 @@ class CommandLineInterface
                 coach.delete
             end
         end
-        continuation
+        # continuation
     end
 
 
@@ -224,7 +224,7 @@ class CommandLineInterface
         if choice == "yes"
             Coach.students.delete_all
         end
-        continuation
+        # continuation
     end
     
 
