@@ -86,7 +86,7 @@ class CommandLineInterface
         name
         input = gets.chomp.capitalize()
         student = Student.find_or_create_by(name: input)
-        puts "#{student.name}"
+        puts student.name
         continuation
     end
     
@@ -95,7 +95,7 @@ class CommandLineInterface
         name
         input = gets.chomp.capitalize()
         coach = Coach.find_or_create_by(name: input)
-        puts "#{coach.name}"
+        puts coach.name
         continuation
     end
 
@@ -104,30 +104,30 @@ class CommandLineInterface
         name
         input = gets.chomp.capitalize()
         coach = SwimMeet.find_or_create_by(name: input)
-        puts "#{coach.name}"
+        puts coach.name
         continuation
     end
 
     # Return the numbers of swim meet
     def count_swim_meet
-        puts "#{SwimMeet.count}"
+        puts SwimMeet.count
         continuation
     end
 
     # Return the first coach found in the Coach Array
     def first_coach
-        puts "#{Coach.first}"
+        puts Coach.first
         continuation
     end
 
     # Return the numbers of coaches
     def count_coach
-        puts "#{Coach.count}"
+        puts Coach.count
         continuation
     end
     # Return the last student found in the Student Array
     def last_student
-        puts "#{Student.last}"
+        puts Student.last
         continuation
     end
 
@@ -135,7 +135,7 @@ class CommandLineInterface
     def count_student
         input = gets.chomp.capitalize()
         coach = Coach.find_by(name: input)
-        puts "#{coach.students.name}"
+        puts coach.students.name
         continuation
     end
 
@@ -148,7 +148,7 @@ class CommandLineInterface
             puts "Please enter the name you want to replace with"
             repl_name = gets.chomp.capitalize()
             coach.update(name: repl_name)
-            puts "#{coach}"
+            puts coach
             continuation
         else
             puts "Name not found. Please create a profile."
@@ -165,7 +165,7 @@ class CommandLineInterface
             puts "Please enter the name you want to replace with"
             repl_name = gets.chomp.capitalize
             coach.update(name: repl_name)
-            puts "#{student}"
+            puts student        
             continuation
         else
             puts "Name not found. Please create a profile."

@@ -37,6 +37,8 @@ pushing the code changes to github.
 
 Type "bundle install" in the terminal to install all the gems required for this program.
 To use TTY::Prompt for the ClI write 'gem "tty-prompt"' in the gemfile and then type "bundle" in the terminal.
+to use Awesome print in the program write 'gem "awesome_print" in the gemfile and then type "bundle install"
+in the terminal.
 
 
 ## Run our program
