@@ -22,6 +22,9 @@ coach5 = Coach.create(name: Faker::Name.first_name)
 sm1 = SwimMeet.create(coach_id: Coach.all.sample.id, student_id: Student.all.sample.id, name: Faker::Address.city)
 sm2 = SwimMeet.create(coach_id: Coach.all.sample.id, student_id: Student.all.sample.id, name: Faker::Address.city)
 sm3 = SwimMeet.create(coach_id: Coach.all.sample.id, student_id: Student.all.sample.id, name: Faker::Address.city)
+sm4 = SwimMeet.create(coach_id: Coach.all.sample.id, student_id: Student.all.sample.id, name: Faker::Address.city)
+
+
 
 
 

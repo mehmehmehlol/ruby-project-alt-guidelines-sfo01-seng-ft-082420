@@ -1,6 +1,5 @@
 class CommandLineInterface
     def run
-<<<<<<< HEAD
        welcome 
     end
 
@@ -13,32 +12,6 @@ class CommandLineInterface
             menu.choice "Swim Meet"
             menu.choice "exit" 
         end 
-=======
-        menu
-    end
-    
-    def menu
-    prompt = TTY::Prompt.new
-    system("clear")
-    welcome = prompt.select("Welcome to the Swim Meet", cycle: true) do |menu|
-        menu.choice "Create Or Find Student(s)"
-        menu.choice "Create Or Find Coach(es)"
-        # Here we can change to its own menu: create swim meets, find swim meets and number of swim meets 
-        menu.choice "Numbers of Swim Meets"
-        # Here we can change to its own menu: return the number of coaches and find their students (or something) 
-        menu.choice "first_coach"
-        menu.choice "Numbers of Coaches"
-        # Here we can change to its own menu: return the number of coaches of a particular students and find their coaches
-        menu.choice "last_student"
-        menu.choice "count_student"
-        menu.choice "update_coach"
-        menu.choice "update_student"
-        menu.choice "delete_coach"
-        menu.choice "delete_student"
-        menu.choice "FOR COACHES ONLY: Delete all students"
-        menu.choice "exit" 
-    end 
->>>>>>> 9fe382f6b0e00fe082363f85e055f98050476321
 
         case welcome
         
