@@ -84,12 +84,8 @@ class CommandLineInterface
         name
         input = gets.chomp
         student = Student.find_or_create_by(name: input)
-<<<<<<< HEAD
         puts "#{student.name}"
         continuation
-=======
-        puts student.name
->>>>>>> d3f675ab7d421ded0ae503841f2b8d8c4f61e536
     end
     
     # Create coach if not exist
@@ -97,7 +93,6 @@ class CommandLineInterface
         name
         input = gets.chomp
         coach = Coach.find_or_create_by(name: input)
-<<<<<<< HEAD
         puts "#{coach.name}"
         continuation
     end
@@ -109,9 +104,6 @@ class CommandLineInterface
         coach = SwimMeet.find_or_create_by(name: input)
         puts "#{coach.name}"
         continuation
-=======
-        puts coach.name
->>>>>>> d3f675ab7d421ded0ae503841f2b8d8c4f61e536
     end
 
     # Return the numbers of swim meet
