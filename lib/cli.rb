@@ -77,7 +77,7 @@ class CommandLineInterface
         if choice == "Yes"
             run
         else 
-            puts "Thanks for stopping by!"
+            puts "Thanks for stopping by! SEA you later!!"
         end
     end
 
@@ -87,6 +87,7 @@ class CommandLineInterface
         input = gets.chomp.capitalize()
         student = Student.find_or_create_by(name: input)
         puts "#{student.name}"
+        
         continuation
     end
     
@@ -96,6 +97,7 @@ class CommandLineInterface
         input = gets.chomp.capitalize()
         coach = Coach.find_or_create_by(name: input)
         puts "#{coach.name}"
+        
         continuation
     end
 
@@ -103,8 +105,8 @@ class CommandLineInterface
     def find_or_create_swim_meet
         name
         input = gets.chomp.capitalize()
-        coach = SwimMeet.find_or_create_by(name: input)
-        puts "#{coach.name}"
+        swim_meet = SwimMeet.find_or_create_by(name: input)
+        puts "#{swim_meet.name}"
         continuation
     end
 
