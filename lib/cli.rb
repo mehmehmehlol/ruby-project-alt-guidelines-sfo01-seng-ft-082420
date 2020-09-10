@@ -70,19 +70,21 @@ class CommandLineInterface
     end
 
     def continuation
+        prompt = TTY::Prompt.new
+        system("clear")
         choice = prompt.select("Would you like to continue", %w(Yes No), cycle: true) 
         
         if choice == "Yes"
             run
         else 
-            put "Thanks for stopping by!"
+            puts "Thanks for stopping by!"
         end
     end
 
     # Create student if not exist
     def find_or_create_student
         name
-        input = gets.chomp
+        input = gets.chomp.capitalize()
         student = Student.find_or_create_by(name: input)
         puts "#{student.name}"
         continuation
@@ -91,7 +93,7 @@ class CommandLineInterface
     # Create coach if not exist
     def find_or_create_coach
         name
-        input = gets.chomp
+        input = gets.chomp.capitalize()
         coach = Coach.find_or_create_by(name: input)
         puts "#{coach.name}"
         continuation
