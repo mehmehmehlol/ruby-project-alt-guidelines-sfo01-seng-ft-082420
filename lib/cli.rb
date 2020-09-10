@@ -70,34 +70,31 @@ class CommandLineInterface
     end
 
     def continuation
+        prompt = TTY::Prompt.new
+        system("clear")
         choice = prompt.select("Would you like to continue", %w(Yes No), cycle: true) 
         
         if choice == "Yes"
             run
         else 
-            put "Thanks for stopping by!"
+            puts "Thanks for stopping by!"
         end
     end
 
     # Create student if not exist
     def find_or_create_student
         name
-        input = gets.chomp
+        input = gets.chomp.capitalize()
         student = Student.find_or_create_by(name: input)
-<<<<<<< HEAD
         puts "#{student.name}"
         continuation
-=======
-        puts student.name
->>>>>>> d3f675ab7d421ded0ae503841f2b8d8c4f61e536
     end
     
     # Create coach if not exist
     def find_or_create_coach
         name
-        input = gets.chomp
+        input = gets.chomp.capitalize()
         coach = Coach.find_or_create_by(name: input)
-<<<<<<< HEAD
         puts "#{coach.name}"
         continuation
     end
@@ -109,9 +106,6 @@ class CommandLineInterface
         coach = SwimMeet.find_or_create_by(name: input)
         puts "#{coach.name}"
         continuation
-=======
-        puts coach.name
->>>>>>> d3f675ab7d421ded0ae503841f2b8d8c4f61e536
     end
 
     # Return the numbers of swim meet
