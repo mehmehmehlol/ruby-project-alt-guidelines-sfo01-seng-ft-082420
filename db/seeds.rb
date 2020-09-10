@@ -1,6 +1,6 @@
-SwimMeet.destroy_all
-Student.destroy_all
-Coach.destroy_all
+SwimMeet.delete_all
+Student.delete_all
+Coach.delete_all
 
 student1 = Student.create(name: Faker::Name.first_name)
 student2 = Student.create(name: Faker::Name.first_name)
@@ -19,9 +19,9 @@ coach3 = Coach.create(name: Faker::Name.first_name)
 coach4 = Coach.create(name: Faker::Name.first_name)
 coach5 = Coach.create(name: Faker::Name.first_name)
 
-sm1 = SwimMeet.create(coach_id: Coach.all.sample.id, student_id: Student.all.sample.id, name: Faker::Address.city)
-sm2 = SwimMeet.create(coach_id: Coach.all.sample.id, student_id: Student.all.sample.id, name: Faker::Address.city)
-sm3 = SwimMeet.create(coach_id: Coach.all.sample.id, student_id: Student.all.sample.id, name: Faker::Address.city)
+sm1 = SwimMeet.create(name: Faker::Address.city)
+sm2 = SwimMeet.create(name: Faker::Address.city)
+sm3 = SwimMeet.create(name: Faker::Address.city)
 
 
 

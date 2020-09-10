@@ -1,6 +1,5 @@
 class CommandLineInterface
     def run
-<<<<<<< HEAD
        welcome 
     end
 
@@ -13,32 +12,6 @@ class CommandLineInterface
             menu.choice "Swim Meet"
             menu.choice "exit" 
         end 
-=======
-        menu
-    end
-    
-    def menu
-    prompt = TTY::Prompt.new
-    system("clear")
-    welcome = prompt.select("Welcome to the Swim Meet", cycle: true) do |menu|
-        menu.choice "Create Or Find Student(s)"
-        menu.choice "Create Or Find Coach(es)"
-        # Here we can change to its own menu: create swim meets, find swim meets and number of swim meets 
-        menu.choice "Numbers of Swim Meets"
-        # Here we can change to its own menu: return the number of coaches and find their students (or something) 
-        menu.choice "first_coach"
-        menu.choice "Numbers of Coaches"
-        # Here we can change to its own menu: return the number of coaches of a particular students and find their coaches
-        menu.choice "last_student"
-        menu.choice "count_student"
-        menu.choice "update_coach"
-        menu.choice "update_student"
-        menu.choice "delete_coach"
-        menu.choice "delete_student"
-        menu.choice "FOR COACHES ONLY: Delete all students"
-        menu.choice "exit" 
-    end 
->>>>>>> 9fe382f6b0e00fe082363f85e055f98050476321
 
         case welcome
         
@@ -129,10 +102,11 @@ class CommandLineInterface
         # end
     end
 
-    def swim_meet
+    def swim_meet_method
         prompt = TTY::Prompt.new
         system("clear")
         swim_meet = prompt.select("Swim Meet Menu", cycle: true) do |menu|
+            menu.choice "Create Swim Meet"
             menu.choice "first_coach"
             menu.choice "Numbers of Swim Meets"
             menu.choice "Numbers of Coaches"
@@ -142,6 +116,9 @@ class CommandLineInterface
         end
 
         case swim_meet
+
+        when "Create Swim Meet"
+            find_or_create_swim_meet
         
         when "Numbers of Swim Meets"
             count_swim_meet
@@ -184,9 +161,14 @@ class CommandLineInterface
     # Get students and print out the associated coach and swim meet
     def find_or_create_student
         name
-        input = gets.chomp.capitalize()
-        student_name = Student.find_or_create_by(name: input)
-        puts "#{student_name.name}"
+        student_input = gets.chomp.capitalize()
+        student_name = Student.find_or_create_by(name: student_input)
+        # binding.pry
+        if student_name.swim_meets == []
+            puts "Please contact your coach"
+        else 
+            puts "#{student_name.swim_meets.name}"
+        end
         # instead of returning their name, return the swim meet and coach associate with
         puts "Return the menu? Press any key to return the menu"
         gets.chomp
@@ -194,12 +176,7 @@ class CommandLineInterface
         # continuation
     end
 
-    # Print out all the students with the associated swim meet
-    def show_student
-        # input
-        sm1 = SwimMeet.find_by(name: "North Ikebury")
-        sm1.student
-    end
+   
     
     # Create coach if not exist
     def find_or_create_coach
@@ -219,11 +196,11 @@ class CommandLineInterface
     def find_or_create_swim_meet
         name
         input = gets.chomp.capitalize()
-        swim_meet_name = SwimMeet.find_or_create_by(name: input)
-        puts "#{swim_meet_name.name}"
+        @swim_meet_name = SwimMeet.find_or_create_by(name: input)
+        puts "#{@swim_meet_name.name}"
         puts "Return the menu? Press any key to return the menu"
         gets.chomp
-        swim_meet
+        swim_meet_method
         # continuation
     end
 
@@ -232,7 +209,7 @@ class CommandLineInterface
         puts "#{SwimMeet.count}"
         puts "Return the menu? Press any key to return the menu"
         gets.chomp
-        swim_meet
+        swim_meet_method
         # continuation
     end
 
@@ -241,7 +218,7 @@ class CommandLineInterface
         puts "#{Coach.first.name}"
         puts "Return the menu? Press any key to return the menu"
         gets.chomp
-        swim_meet
+        swim_meet_method
         # continuation
     end
 
@@ -259,7 +236,7 @@ class CommandLineInterface
         puts "#{Coach.count}"
         puts "Return the menu? Press any key to return the menu"
         gets.chomp
-        swim_meet
+        swim_meet_method
         # continuation
     end
    
@@ -276,6 +253,13 @@ class CommandLineInterface
         # continuation
     end
     # may need another method for the overrall swimmeet
+
+    # Print out all the students with the associated swim meet
+    def show_student
+        # input
+        sm1 = SwimMeet.find_by(name: "North Ikebury")
+        sm1.student
+    end
 
     # Update coach's name
     def update_coach
