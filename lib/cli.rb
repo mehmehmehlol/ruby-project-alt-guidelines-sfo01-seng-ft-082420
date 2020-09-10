@@ -82,13 +82,21 @@ class CommandLineInterface
     end
 
     # Create student if not exist
+    # Get students and print out the associated coach and swim meet
     def find_or_create_student
         name
         input = gets.chomp.capitalize()
         student = Student.find_or_create_by(name: input)
         puts "#{student.name}"
         
-        continuation
+        # continuation
+    end
+
+    # Print out all the students with the associated swim meet
+    def show_student(students)
+        students.each do |students|
+            students.swim_meets.map {}
+        end
     end
     
     # Create coach if not exist
