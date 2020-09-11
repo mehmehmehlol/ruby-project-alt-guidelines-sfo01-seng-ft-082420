@@ -23,7 +23,6 @@ Welcome coaches and students to our newly created program! This program will all
 - Update your info, and
 - for Students: you can switch coaches 
 - for Coaches: you can switch your students 
-- ONLY FOR COACHES: you can delete your student roasters if you'd like to rearrange 
 
 ---
 
