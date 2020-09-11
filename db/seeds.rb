@@ -1,6 +1,6 @@
-SwimMeet.destroy_all
-Student.destroy_all
-Coach.destroy_all
+SwimMeet.delete_all
+Student.delete_all
+Coach.delete_all
 
 student1 = Student.create(name: Faker::Name.first_name)
 student2 = Student.create(name: Faker::Name.first_name)

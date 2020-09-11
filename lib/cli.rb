@@ -78,7 +78,8 @@ class CommandLineInterface
             find_or_create_coach
     
         when "Create Swim Meet"
-            # create a new method: create_swim_meet
+            find_or_create_swim_meet
+
         when "Show Students"
             show_student
         when "last_student"
@@ -102,7 +103,7 @@ class CommandLineInterface
         # end
     end
 
-    def swim_meet
+    def swim_meet_method
         prompt = TTY::Prompt.new
         system("clear")
         swim_meet = prompt.select("Swim Meet Menu", cycle: true) do |menu|
@@ -141,71 +142,105 @@ class CommandLineInterface
         puts "Please enter your name"  
     end
 
-    # def continuation
-    #     prompt = TTY::Prompt.new
-    #     system("clear")
-    #     choice = prompt.select("Would you like to continue", %w(Yes No), cycle: true) 
-        
-    #     if choice == "Yes"
-    #         run
-    #     else 
-    #         puts "Thanks for stopping by! SEA you later!!"
-    #     end
-    # end
 
     # Create student if not exist
     # Get students and print out the associated coach and swim meet
     def find_or_create_student
         name
-        input = gets.chomp.capitalize()
-        student_name = Student.find_or_create_by(name: input)
-        puts "#{student_name.name}"
-        # instead of returning their name, return the swim meet and coach associate with
+        student_input = gets.chomp.capitalize()
+        student_name = Student.find_or_create_by(name: student_input)
+        if student_name.swim_meets == []
+            puts "If there is no swim meet available for you, please contact your coach."
+        else 
+            puts "Here is the name of your Swim Meet:"
+            student_name.swim_meets.select{|swim_meet| p swim_meet.name}
+        end
+        
         puts "Return the menu? Press any key to return the menu"
         gets.chomp
         student
-        # continuation
     end
-
-    # Print out all the students with the associated swim meet
-    def show_student
-        # input
-        sm1 = SwimMeet.find_by(name: "North Ikebury")
-        sm1.student
-    end
+   
     
     # Create coach if not exist
     def find_or_create_coach
         name
         input = gets.chomp.capitalize()
 
-        coach_name = Coach.find_or_create_by(name: input)
-        puts "#{coach_name.name}"
+        coach_name = Coach.create(name: input)
          # instead of returning their name, return the swim meet and student associate with
+         list = SwimMeet.all.select{|swim_meet| swim_meet.coach_id == nil}
+         list.first.coach = coach_name
+        # if coach_name.swim_meets == []
+        #     # binding.pry
+
+        #    "Please direct to the Create Swim Meet on the previous page."
+        # else 
+        #     puts "Here is the name of your Swim Meet:"
+        #     coach_name.swim_meets.select{|swim_meet| p swim_meet.name}
+        # end
+    
         puts "Return the menu? Press any key to return the menu"
         gets.chomp
         coach
-        # continuation
+    end
+
+    # Find Coach
+    def find_coach
+        name 
+        input = gets.chomp.capitalize()
+
+        coach_name = Coach.find_by(name: input)
+        if coach_name != nil
+            puts "Here is the name of your Swim Meet:"
+            coach_name.swim_meets.select{|swim_meet| p swim_meet.name}
+        else
+            puts "If you don't find your name, press any key to return to the menu"
+            gets.chomp
+            coach
+        end
+        coach_name
     end
 
     # Create Swim Meet if not exist
     def find_or_create_swim_meet
-        name
+        puts "Please enter the name of Swim Meet or if you don't have one pick a name of your Swim meet"
         input = gets.chomp.capitalize()
         swim_meet_name = SwimMeet.find_or_create_by(name: input)
-        puts "#{swim_meet_name.name}"
+        #binding.pry
+        if  swim_meet_name.coach_id == nil
+            coach_name = find_coach
+             binding.pry
+            swim_meet_name.coach = coach_name       
+        # elsif swim_meet_name.student_id != nil
+        #     find_or_create_by_student
+        #     puts swim_meet_name.student.name
+        #     puts swim_meet_name.coach.name    
+        else
+            puts "No coach ,no student"
+        end
         puts "Return the menu? Press any key to return the menu"
         gets.chomp
-        swim_meet
-        # continuation
+        coach
     end
+
+    # ```
+    # coach is pushing students into swim meet
+    # in order to do that, coach needs to put him/herself into the swim meet
+    #     if coach_id === nil
+    #         find_or_create_by_coach
+    #         swimmeet.coach << coach
+    #     if student_id == nil
+    #         find_or_creaet_by_student
+    #         swimmeet.student << student
+    # ```
 
     # Return the numbers of swim meet
     def count_swim_meet
         puts "#{SwimMeet.count}"
         puts "Return the menu? Press any key to return the menu"
         gets.chomp
-        swim_meet
+        swim_meet_method
         # continuation
     end
 
@@ -214,7 +249,7 @@ class CommandLineInterface
         puts "#{Coach.first.name}"
         puts "Return the menu? Press any key to return the menu"
         gets.chomp
-        swim_meet
+        swim_meet_method
         # continuation
     end
 
@@ -232,7 +267,7 @@ class CommandLineInterface
         puts "#{Coach.count}"
         puts "Return the menu? Press any key to return the menu"
         gets.chomp
-        swim_meet
+        swim_meet_method
         # continuation
     end
    
@@ -249,6 +284,13 @@ class CommandLineInterface
         # continuation
     end
     # may need another method for the overrall swimmeet
+
+    # Print out all the students with the associated swim meet
+    def show_student
+        # input
+        sm1 = SwimMeet.find_by(name: "North Ikebury")
+        sm1.student
+    end
 
     # Update coach's name
     def update_coach
