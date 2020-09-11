@@ -260,8 +260,7 @@ class CommandLineInterface
     end
    
 
-    # Return the numbers of students from that particular coach
-    #Not working
+    # Return the numbers of students
     def count_student 
         puts "Number of students: #{Student.count}"
         puts "Return the menu? Press any key to return the menu"
@@ -270,7 +269,7 @@ class CommandLineInterface
     end
     # may need another method for the overrall swimmeet
 
-    # Print out all the students with the associated swim meet
+    # Print out all the swim meets
     def show_all_swim_meets
         puts "Names of all the Swim Meets"
         SwimMeet.all.each{|swim_meet| puts swim_meet.name}
@@ -308,7 +307,6 @@ class CommandLineInterface
             puts "Please enter the name you want to replace with"
             repl_name = gets.chomp.capitalize
             student_name.update(name: repl_name)
-            # may need to delete the following
             puts "\nStudent ID: #{student_name.id}\nStudent Name (Updated): #{student_name.name}"
             puts "\nReturn the menu? Press any key to return the menu"
             gets.chomp
