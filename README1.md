@@ -27,7 +27,7 @@ Welcome coaches and students to our newly created program! This program will all
 
 ## Setup
 
-Fork it then and clone this repository from github to begin.
+Fork it and then clone this repository from github to begin.
 
 After finishing up, run 
 1. `git add .`  
@@ -49,7 +49,9 @@ OPTIONAL:
 
 The format of the table is inside the `db/schema.rb`, migrated from `db/migrate/ALL_THE_TABLES_COLUMN_FORMATION`.
 
-In the `lib` directory, there are 3 models, including: `coach.rb`, `student.rb`, `swim_meet.rb`. `swim_meet.rb` is our join model between coach and student. 
+In the `lib` directory, there are 3 models, including: `coach.rb`, `student.rb`, `swim_meet.rb`. 
+
+`swim_meet.rb` is our join model between coach and student. 
 
 ### Relationships:
 - A Swim Meet belongs to a student.

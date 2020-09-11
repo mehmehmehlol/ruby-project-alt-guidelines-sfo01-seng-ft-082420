@@ -217,22 +217,22 @@ class CommandLineInterface
         if  swim_meet_name.coach_id == nil
             coach_name = find_coach
             swim_meet_name.coach = coach_name
-            swim_meet_name.coach.save
-            # puts swim_meet_name.coach.name 
-            puts "\nSwim Meet: #{swim_meet_name.name}, Coach ID: #{swim_meet_name.coach_id}\n"
+            swim_meet_name.coach.save!
+            coach_name.swim_meets.push(swim_meet_name)
+            puts "\nSwim Meet: #{swim_meet_name.name}, Coach ID: #{swim_meet_name.coach_id}, Coach Name: #{swim_meet_name.coach.name} \n"
         else 
-             puts "\nSwim Meet: #{swim_meet_name.name}, Coach ID: #{swim_meet_name.coach_id}\n"
+            puts "\nSwim Meet: #{swim_meet_name.name}, Coach ID: #{swim_meet_name.coach_id}, Coach Name: #{swim_meet_name.coach.name}\n"
         end  
 
         puts "\n\n<--Student-->\n"
         if swim_meet_name.student_id == nil
             student_name = find_student
             swim_meet_name.student = student_name
-            swim_meet_name.student.save
-            # puts swim_meet_name.student.name      
-            puts "\nSwim Meet: #{swim_meet_name.name},Coach Name: #{swim_meet_name.coach.name}, Student ID: #{swim_meet_name.student_id}\n"
+            swim_meet_name.student.save!
+            student_name.swim_meets.push(swim_meet_name)    
+            puts "\nSwim Meet: #{swim_meet_name.name}, Coach Name: #{swim_meet_name.coach.name}, Student ID: #{swim_meet_name.student_id}, Student Name: #{swim_meet_name.student.name}\n"
         else 
-            puts "\nSwim Meet: #{swim_meet_name.name}, Coach Name: #{swim_meet_name.coach.name}, Student ID: #{swim_meet_name.student_id}\n"
+            puts "\nSwim Meet: #{swim_meet_name.name}, Coach Name: #{swim_meet_name.coach.name}, Student ID: #{swim_meet_name.student_id}, Student Name: #{swim_meet_name.student.name}\n"
 
         end
         puts "\nReturn the menu? Press any key to return the menu"
